@@ -1,15 +1,20 @@
 <?xml version="1.0" ?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
-	<default>
-		<payment>
-			<paybear>
-				<active>1</active>
-				<model>Paybear\Payment\Model\Payment\Paybear</model>
-				<order_status>pending</order_status>
-				<title>Paybear</title>
-				<allowspecific>0</allowspecific>
-				<group>offline</group>
-			</paybear>
-		</payment>
-	</default>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <paybear>
+                <active>1</active>
+                <model>Paybear\Payment\Model\Payment\Paybear</model>
+                <order_status>pending</order_status>
+                <title>Paybear</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+                <testnet>0</testnet>
+                <exchange_locktime>15</exchange_locktime>
+                <minoverpaymentfiat>1</minoverpaymentfiat>
+                <maxunderpaymentfiat>0.1</maxunderpaymentfiat>
+            </paybear>
+        </payment>
+    </default>
 </config>
