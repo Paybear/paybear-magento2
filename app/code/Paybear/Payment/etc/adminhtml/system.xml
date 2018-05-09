@@ -46,11 +46,11 @@
                     <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
                     <can_be_empty>1</can_be_empty>
                 </field>
-                <field id="testnet" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label"
+                <!--<field id="testnet" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label"
                        type="select">
                     <label>Testnet</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
+                </field>-->
             </group>
         </section>
     </system>
