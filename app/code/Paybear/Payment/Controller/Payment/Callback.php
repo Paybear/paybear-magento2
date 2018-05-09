@@ -45,6 +45,8 @@ class Callback extends Action
         $order_id = (int)$params['order'];
 
         $response = $this->paybearPayment->checkCallback($data, $order_id);
+        $this->helper->log('Order Id:' . $order_id);
+        $this->helper->log($response);
 
         $this->getResponse()->setBody($response);
     }

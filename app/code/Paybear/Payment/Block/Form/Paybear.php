@@ -9,6 +9,7 @@
 namespace Paybear\Payment\Block\Form;
 
 use Magento\Checkout\Model\Session;
+use Magento\Sales\Model\Order;
 
 
 class Paybear extends \Magento\Framework\View\Element\Template
@@ -23,6 +24,9 @@ class Paybear extends \Magento\Framework\View\Element\Template
 
     protected $_logger;
 
+    protected $registry;
+    protected $_order;
+
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
@@ -30,8 +34,9 @@ class Paybear extends \Magento\Framework\View\Element\Template
         \Paybear\Payment\Model\Payment $paybearPayment,
         \Paybear\Payment\Helper\Data $helper,
         \Magento\Framework\UrlInterface $url,
-
+        Order $order,
         \Psr\Log\LoggerInterface $logger,
+        \Magento\Framework\Registry $registry,
         array $data = []
     )
     {
@@ -43,16 +48,18 @@ class Paybear extends \Magento\Framework\View\Element\Template
         $this->url = $url;
 
         $this->_logger = $logger;
+        $this->_order = $order;
+        $this->registry = $registry;
 
         parent::__construct($context, $data);
     }
 
     public function getOrder()
     {
-        $id = $this->_checkoutSession->getLastOrderId();
 
+        $id = $this->registry->registry('last_real_order_id');
         if ($id) {
-            $order = $this->_orderRepository->get($id);
+            $order = $this->_order->loadByIncrementId($id);
             if ($order->getEntityId())
                 return $order;
         }

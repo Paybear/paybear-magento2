@@ -37,8 +37,6 @@ class Test extends Action
 
     )
     {
-        parent::__construct($context);
-
         $this->order = $order;
         $this->paybearPayment = $paybearPayment;
 
@@ -50,6 +48,8 @@ class Test extends Action
         $this->helper = $helper;
 
         $this->orderStatus = $orderStatus;
+
+        parent::__construct($context);
     }
 
     public function execute()

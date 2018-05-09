@@ -20,14 +20,10 @@
                                                         <item name="renders" xsi:type="array">
                                                             <item name="children" xsi:type="array">
                                                                 <item name="paybear" xsi:type="array">
-                                                                    <item name="component"
-                                                                          xsi:type="string">Paybear_Payment/js/view/payment/paybear
-                                                                    </item>
+                                                                    <item name="component" xsi:type="string">Paybear_Payment/js/view/payment/paybear</item>
                                                                     <item name="methods" xsi:type="array">
                                                                         <item name="paybear" xsi:type="array">
-                                                                            <item name="isBillingAddressRequired"
-                                                                                  xsi:type="boolean">true
-                                                                            </item>
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                     </item>
                                                                 </item>
