@@ -19,6 +19,10 @@ define([
                 modal: true,
                 enablePoweredBy: true
             });
+
+            if (document.getElementById('paybear-all')) {
+                    document.getElementById('paybear-all').click();
+            }
         }
 
 

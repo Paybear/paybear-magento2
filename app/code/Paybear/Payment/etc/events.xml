@@ -3,4 +3,7 @@
     <event name="admin_system_config_changed_section_payment">
         <observer name="paybear_admin_system_config_changed_section_general" instance="Paybear\Payment\Observer\Config"/>
     </event>
+    <event name="payment_method_is_active">
+        <observer name="paybear_payment_method_is_active" instance="Paybear\Payment\Observer\Payment" />
+    </event>
 </config>

@@ -122,18 +122,7 @@ class Payment extends \Magento\Framework\Model\AbstractModel implements \Paybear
                 if ($currency->maximum > 0 && $amount > $currency->maximum) $maximum = false;
 
                 if ($amount >= $currency->minimum && $maximum) {
-                    if ($token == 'all') {
-
-                        $currency->currencyUrl = $this->url->getUrl('paybear/payment/currencies', [
-                            'order' => $order_id,
-                            'order_currency_code' => $order_currency_code,
-                            'token' => $code
-                        ]);
-                        $currency->coinsValue = $amount;
-                        $currency->rate = round($rate, 2);
-
-                        $result[] = $currency;
-                    } elseif ($token == $code) {
+                    if (($token == $code) || (count($this->getCurrencies()) == 1)  ) {
 
                         $unconfirmedTotal = $this->getAlreadyPaidCoins($order_id);
 
@@ -145,6 +134,18 @@ class Payment extends \Magento\Framework\Model\AbstractModel implements \Paybear
 
                         $result = (array)$currency;
                         break;
+
+                    } elseif ($token == 'all') {
+
+                        $currency->currencyUrl = $this->url->getUrl('paybear/payment/currencies', [
+                            'order' => $order_id,
+                            'order_currency_code' => $order_currency_code,
+                            'token' => $code
+                        ]);
+                        $currency->coinsValue = $amount;
+                        $currency->rate = round($rate, 2);
+
+                        $result[] = $currency;
                     }
                 }
             }
