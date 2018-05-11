@@ -117,6 +117,7 @@ class Paybear extends \Magento\Framework\View\Element\Template
         $data['currency_sign'] = $this->helper->getCurrentCurrencySymbol();
         $data['min_overpayment_fiat'] = $this->helper->getMinoverpaymentfiat();
         $data['max_underpayment_fiat'] = $this->helper->getMaxunderpaymentfiat();
+        $data['timer'] = $this->helper->getExchangeLocktime() * 60;
 
         $data['order_review'] = $this->getOrderInfo($order, $this->helper->getCurrentCurrencySymbol(), $fiat_value, $total_paid);
 

@@ -17,7 +17,8 @@ define([
                 minOverpaymentFiat: parseFloat(paybear.config.min_overpayment_fiat),
                 maxUnderpaymentFiat: parseFloat(paybear.config.max_underpayment_fiat),
                 modal: true,
-                enablePoweredBy: true
+                enablePoweredBy: true,
+                timer: paybear.config.timer
             });
 
             if (document.getElementById('paybear-all')) {
