@@ -12,7 +12,7 @@ Once registered, you can manage the currencies you want to integrate in the Memb
 <h3>Install ready-to-paste package</h3>
 
  
- 1. Download the latest version of the integration: https://github.com/Paybear/paybear-magento2/releases/download/v1.0.2/paybear-magento2.zip
+ 1. Download the latest version of the integration: https://github.com/Paybear/paybear-magento2/releases/download/v1.0.3/paybear-magento2.zip
  2. Extract the package and connect to your server using SFTP Clients. Then upload the app folder to Magento 2 root folder.
  3. To complete the installation process you need to run following commands: <br>
     php bin/magento setup:upgrade <br>
