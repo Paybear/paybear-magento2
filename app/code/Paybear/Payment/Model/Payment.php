@@ -119,7 +119,11 @@ class Payment extends \Magento\Framework\Model\AbstractModel implements \Paybear
                 $amount = round($order_total / $rate, 8);
                 $currency = (object)$currency;
                 $maximum = true;
-                if ($currency->maximum > 0 && $amount > $currency->maximum) $maximum = false;
+                if ($currency->maximum > 0 && $amount > $currency->maximum) {
+                    $maximum = false;
+                    $err_msg = sprintf('Incorrect order amount. Order ID: %s, crypto code: %s, crypto maximum: %s, order amount: %s', $order_id, $code, $currency->maximum, $amount);
+                    $this->helper->log($err_msg);
+                }
 
                 if ($amount >= $currency->minimum && $maximum) {
                     if (($token == $code) || (count($this->getCurrencies()) == 1)  ) {
@@ -147,6 +151,11 @@ class Payment extends \Magento\Framework\Model\AbstractModel implements \Paybear
 
                         $result[] = $currency;
                     }
+                } else {
+                    if (!($amount >= $currency->minimum)) {
+                        $err_msg = sprintf('Incorrect order amount. Order ID: %s, crypto code: %s, crypto minimum: %s, order amount: %s', $order_id, $code, $currency->minimum, $amount);
+                        $this->helper->log($err_msg);
+                    }
                 }
             }
         }
@@ -159,8 +168,22 @@ class Payment extends \Magento\Framework\Model\AbstractModel implements \Paybear
 
     public function getRate($curCode, $order_currency_code)
     {
-        $rates = $this->getRates($order_currency_code);
         $curCode = strtolower($curCode);
+        if ($curCode == $order_currency_code)
+            return 1;
+
+        /**
+         * Check, is order currency crypto ?
+         */
+        if (in_array($order_currency_code, $this->getCryptoCurrencies())) {
+
+            $rateCryptoToCrypto = $this->getCryptoToCrypto($curCode, $order_currency_code);
+
+            return $rateCryptoToCrypto;
+
+        }
+
+        $rates = $this->getRates($order_currency_code);
 
         return isset($rates[$curCode]) ? $rates[$curCode]['mid'] : false;
     }
@@ -181,6 +204,36 @@ class Payment extends \Magento\Framework\Model\AbstractModel implements \Paybear
 
         return self::$_rates;
 
+    }
+
+
+    /**
+     * Get Cryptocurrency codes
+     * @return array
+     */
+    public function getCryptoCurrencies() {
+        return array_keys($this->getCurrencies());
+    }
+
+    /**
+     * Get rate of one cryptocurrency to another cryptocurrency
+     * @param $curCode
+     * @param $order_currency_code
+     * @return bool|float|int
+     */
+    public function getCryptoToCrypto($curCode, $order_currency_code) {
+
+        // get USD rates
+        $rates = $this->getRates('usd');
+
+        $curCodeRate = ($rates[$curCode]) ? $rates[$curCode]['mid'] : null;
+        $orderCurrencyRate = ($rates[$order_currency_code]) ? $rates[$order_currency_code]['mid'] : null;
+
+        if (($curCodeRate > 0) && ($orderCurrencyRate > 0)) {
+            return $curCodeRate/$orderCurrencyRate;
+        }
+
+        return false;
     }
 
     public function getPaymentAddress($token, $order_id, $amount, $maxConfirmations)
